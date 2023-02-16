@@ -78,7 +78,6 @@ module.exports = accordion;
 function extendingForm(widget) {
   var extensions = widget.querySelectorAll('[kjs-role=extension]');
   var toggle = widget.querySelector('[kjs-role=toggle]');
-  console.log(widget, extensions, toggle);
   function setup() {
     extensions.forEach(function (extension) {
       if (toggle.value == extension.getAttribute('kjs-trigger')) {
@@ -86,6 +85,7 @@ function extendingForm(widget) {
       } else {
         extension.classList.remove('reveal');
       }
+      console.log(extension, toggle);
     });
   }
   var actions = [{
