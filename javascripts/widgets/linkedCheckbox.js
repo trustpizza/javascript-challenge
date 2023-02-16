@@ -1,14 +1,16 @@
 function linkedCheckbox(widget) {
+    
     // Select all checkbox items
-    const checkboxes = widget.querySelectorAll('[kjs-role=checkbox]');
+    const linkedCheckboxes = widget.querySelectorAll('[kjs-role=checkbox]');
     // setup function
         // Setup function needs to set the current checkbox item 
         // Set a variable to equal the current checkbox item's children (and their children, etc. etc. until all elements are selected)
         // Set a variable equal to a widget's state (checked, unchecked, intermediary)
 
     function setup() {
-        checkboxes.forEach((checkbox) => {
-        });
+        //linkedCheckboxes.forEach((checkbox) => {
+        //});
+        console.log('setup');
     }
 
     function handleCheckboxClick(e) {
@@ -30,5 +32,20 @@ function linkedCheckbox(widget) {
             1. Search the node list of child elements 
         }
     */
-    // return { setup }
+    let actions = [
+
+    ];
+
+    linkedCheckboxes.forEach((checkbox) => {
+        actions.push({
+            element: checkbox,
+            event: 'click',
+            handler: handleCheckboxClick
+        })
+    })
+    console.log(actions);
+    
+    return { setup, actions }
 }
+
+module.exports = linkedCheckbox;

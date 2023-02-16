@@ -1,3 +1,5 @@
+const linkedCheckbox = require("./widgets/linkedCheckbox");
+
 function runSetup(widget) {
   if (widget.setup) { widget.setup(); };
 };
@@ -12,7 +14,7 @@ function kjs(constructors, page) {
   const widgetElements = page.querySelectorAll('[kjs-type]');
 
   widgetElements.forEach((el) => {
-    const widgetName = el.getAttribute('kjs-type')
+    const widgetName = el.getAttribute('kjs-type');
     const widget = constructors[widgetName](el);
 
     runSetup(widget);

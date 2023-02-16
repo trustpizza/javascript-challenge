@@ -1,6 +1,7 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 
+var linkedCheckbox = require("./widgets/linkedCheckbox");
 function runSetup(widget) {
   if (widget.setup) {
     widget.setup();
@@ -26,23 +27,25 @@ function kjs(constructors, page) {
 ;
 module.exports = kjs;
 
-},{}],2:[function(require,module,exports){
+},{"./widgets/linkedCheckbox":5}],2:[function(require,module,exports){
 "use strict";
 
 var _k = _interopRequireDefault(require("./k"));
 var _drawers = _interopRequireDefault(require("./widgets/drawers"));
 var _extendingForm = _interopRequireDefault(require("./widgets/extending-form"));
 var _tabs = _interopRequireDefault(require("./widgets/tabs"));
+var _linkedCheckbox = _interopRequireDefault(require("./widgets/linkedCheckbox"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 document.addEventListener("DOMContentLoaded", function () {
   (0, _k["default"])({
     drawers: _drawers["default"],
     extendingForm: _extendingForm["default"],
-    tabs: _tabs["default"]
+    tabs: _tabs["default"],
+    linkedCheckbox: _linkedCheckbox["default"]
   }, document);
 });
 
-},{"./k":1,"./widgets/drawers":3,"./widgets/extending-form":4,"./widgets/tabs":5}],3:[function(require,module,exports){
+},{"./k":1,"./widgets/drawers":3,"./widgets/extending-form":4,"./widgets/linkedCheckbox":5,"./widgets/tabs":6}],3:[function(require,module,exports){
 "use strict";
 
 function accordion(widget) {
@@ -102,6 +105,54 @@ module.exports = extendingForm;
 },{}],5:[function(require,module,exports){
 "use strict";
 
+function linkedCheckbox(widget) {
+  // Select all checkbox items
+  var linkedCheckboxes = widget.querySelectorAll('[kjs-role=checkbox]');
+  // setup function
+  // Setup function needs to set the current checkbox item 
+  // Set a variable to equal the current checkbox item's children (and their children, etc. etc. until all elements are selected)
+  // Set a variable equal to a widget's state (checked, unchecked, intermediary)
+
+  function setup() {
+    //linkedCheckboxes.forEach((checkbox) => {
+    //});
+    console.log('setup');
+  }
+  function handleCheckboxClick(e) {}
+  // What does the setup function need to do? It needs
+  /* 
+      The setup function needs to create the logic for a checkbox. 
+      The logic for a checkbox is:
+          1. Each box must have a list of child elements (this list can be null) 
+              !!! Important consideration: What kind of data model do I want for checkbox children? I can either have an array or a node list (technically a hash but that's not helpful)
+              !!! Leaning towards a linked list
+          2. Each box must have a parent element (this can also be null)
+          3. Each box must have a state (checked, unchecked, intermediary)
+       There must also be a function that handles state changes
+      checkboxClickHandler () {
+          This function needs to do the following:
+          1. Search the node list of child elements 
+      }
+  */
+  var actions = [];
+  linkedCheckboxes.forEach(function (checkbox) {
+    actions.push({
+      element: checkbox,
+      event: 'click',
+      handler: handleCheckboxClick
+    });
+  });
+  console.log(actions);
+  return {
+    setup: setup,
+    actions: actions
+  };
+}
+module.exports = linkedCheckbox;
+
+},{}],6:[function(require,module,exports){
+"use strict";
+
 function tabs(widget) {
   var contents = widget.querySelectorAll('[kjs-role=content]');
   var tabs = widget.querySelectorAll('[kjs-role=tab]');
@@ -130,6 +181,7 @@ function tabs(widget) {
       handler: handleTabClick
     });
   });
+  console.log(actions);
   return {
     setup: setup,
     actions: actions
