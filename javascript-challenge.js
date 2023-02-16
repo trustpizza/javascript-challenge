@@ -85,7 +85,6 @@ function extendingForm(widget) {
       } else {
         extension.classList.remove('reveal');
       }
-      console.log(extension, toggle);
     });
   }
   var actions = [{

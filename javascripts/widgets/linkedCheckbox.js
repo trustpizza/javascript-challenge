@@ -30,5 +30,5 @@ function linkedCheckbox(widget) {
             1. Search the node list of child elements 
         }
     */
-    return { setup }
+    // return { setup }
 }
