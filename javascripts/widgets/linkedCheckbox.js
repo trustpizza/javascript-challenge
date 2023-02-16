@@ -10,7 +10,9 @@ function linkedCheckbox(widget) {
     /* 
         The setup function needs to create the logic for a checkbox. 
         The logic for a checkbox is:
-            1. Each box must have a list of child elements (this list can be null)
+            1. Each box must have a list of child elements (this list can be null) 
+                !!! Important consideration: What kind of data model do I want for checkbox children? I can either have an array or a node list (technically a hash but that's not helpful)
+                !!! Leaning towards a linked list
             2. Each box must have a parent element (this can also be null)
             3. Each box must have a state (checked, unchecked, intermediary)
 
