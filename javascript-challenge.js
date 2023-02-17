@@ -114,10 +114,12 @@ function linkedCheckbox(widget) {
   // Set a variable equal to a widget's state (checked, unchecked, intermediary)
 
   function setup() {
+    var activeCheckbox = widget.querySelector('.active[kjs-role=checkbox]');
+    var activeChildren = findChildren(activeCheckbox);
     linkedCheckboxes.forEach(function (checkbox) {
       var children = findChildren(checkbox);
     });
-    console.log('setup');
+    console.log('setup', activeCheckbox, activeChildren);
   }
   function findChildren(checkbox) {
     var allDescendants = [];
@@ -144,8 +146,15 @@ function linkedCheckbox(widget) {
     }
   }
   function handleCheckboxClick(e) {
-    var el = e.target;
-    console.log(el, findChildren(el.parentElement));
+    linkedCheckboxes.forEach(function (checkbox) {
+      checkbox.classList.remove('active');
+    });
+    var el = e.target.parentElement;
+    el.classList.add('active');
+    console.log(el);
+    setup();
+    //const children = findChildren(el.parentElement); // This requires to find the parent element because the findChildren fucntion actually looks at the list item element (it requires an element you can nest other elements in and INPUTS are not able to nest elements)
+    //console.log(el, children)
   }
   // What does the setup function need to do? It needs
   /* 
