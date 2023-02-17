@@ -116,7 +116,6 @@ function linkedCheckbox(widget) {
   function setup() {
     linkedCheckboxes.forEach(function (checkbox) {
       var children = findChildren(checkbox);
-      console.log(checkbox, children);
     });
     console.log('setup');
   }
@@ -129,12 +128,12 @@ function linkedCheckbox(widget) {
         recurseToFindChildren(childNodes[i], allDescendants);
       }
     }
-    return allDescendants;
+    return allDescendants.slice(1); // This slice removes the element itself from the array
   }
   ;
   function recurseToFindChildren(el, descendants) {
     if (el.nodeName == "INPUT") {
-      descendants.push(el);
+      descendants.push(el); // This only returns the actual checkboxes available, not just every element
     }
     ;
     var children = el.children;
@@ -144,7 +143,10 @@ function linkedCheckbox(widget) {
       }
     }
   }
-  function handleCheckboxClick(e) {}
+  function handleCheckboxClick(e) {
+    var el = e.target;
+    console.log(el, findChildren(el.parentElement));
+  }
   // What does the setup function need to do? It needs
   /* 
       The setup function needs to create the logic for a checkbox. 

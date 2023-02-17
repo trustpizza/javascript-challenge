@@ -10,7 +10,6 @@ function linkedCheckbox(widget) {
     function setup() {
         linkedCheckboxes.forEach((checkbox) => {
             let children = findChildren(checkbox);
-            console.log(checkbox, children)
         });
         console.log('setup');
     }
@@ -27,7 +26,7 @@ function linkedCheckbox(widget) {
             }          
         }
 
-        return allDescendants;
+        return allDescendants.slice(1); // This slice removes the element itself from the array
     };
 
     function recurseToFindChildren(el, descendants) {
@@ -45,7 +44,9 @@ function linkedCheckbox(widget) {
     }
 
     function handleCheckboxClick(e) {
-
+        const el = e.target;
+        const children = findChildren(el.parentElement); // This requires to find the parent element because the findChildren fucntion actually looks at the list item element (it requires an element you can nest other elements in and INPUTS are not able to nest elements)
+        console.log(el, children)
     }
     // What does the setup function need to do? It needs
     /* 
