@@ -10,7 +10,7 @@ function linkedCheckbox(widget) {
     function setup() {
         const activeCheckbox = widget.querySelector('.active[kjs-role=checkbox]');
         let activeChildren = findChildren(activeCheckbox);
-
+    
         linkedCheckboxes.forEach((checkbox) => {
             let children = findChildren(checkbox);
         });
@@ -49,7 +49,7 @@ function linkedCheckbox(widget) {
         linkedCheckboxes.forEach((checkbox) => { checkbox.classList.remove('active');})
         const el = e.target.parentElement;
         el.classList.add('active');
-        
+
         const checkbox = firstCheckbox(el);
         const children = findChildren(el);
         
@@ -85,9 +85,7 @@ function linkedCheckbox(widget) {
             1. Search the node list of child elements 
         }
     */
-    let actions = [
-
-    ];
+    let actions = [];
 
     linkedCheckboxes.forEach((checkbox) => {
         actions.push({
@@ -96,7 +94,6 @@ function linkedCheckbox(widget) {
             handler: handleCheckboxClick
         })
     })
-    console.log(actions);
     
     return { setup, actions }
 }

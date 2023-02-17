@@ -116,6 +116,7 @@ function linkedCheckbox(widget) {
   function setup() {
     var activeCheckbox = widget.querySelector('.active[kjs-role=checkbox]');
     var activeChildren = findChildren(activeCheckbox);
+    console.log(activeCheckbox);
     linkedCheckboxes.forEach(function (checkbox) {
       var children = findChildren(checkbox);
     });
@@ -152,7 +153,6 @@ function linkedCheckbox(widget) {
     el.classList.add('active');
     var checkbox = firstCheckbox(el);
     var children = findChildren(el);
-    console.log(checkbox);
     setup();
     //const children = findChildren(el.parentElement); // This requires to find the parent element because the findChildren fucntion actually looks at the list item element (it requires an element you can nest other elements in and INPUTS are not able to nest elements)
     //console.log(el, children)
@@ -190,7 +190,6 @@ function linkedCheckbox(widget) {
       handler: handleCheckboxClick
     });
   });
-  console.log(actions);
   return {
     setup: setup,
     actions: actions
