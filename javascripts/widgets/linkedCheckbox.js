@@ -9,16 +9,15 @@ function linkedCheckbox(widget) {
 
     function setup() {
         const activeCheckbox = widget.querySelector('.active[kjs-role=checkbox]');
-        let activeChildren = findChildren(activeCheckbox);
-    
-        for (let i = 0; i < activeChildren.length; i++) {
-            activeChildren[i].addEventListener("click", () => {
-                let checkedCount = activeChildren.length;
+        const activeChildren = findChildren(activeCheckbox);
+        const checkbox = firstCheckbox(activeCheckbox);
 
-                firstCheckbox(activeCheckbox).checked = checkedCount > 0;
-                firstCheckbox(activeCheckbox).indeterminate = checkedCount > 0 && checkedCount < activeChildren.length;
-            })
-        }
+        checkbox.addEventListener("click", () => {
+            for (let i = 0; i < activeChildren.length; i++) {
+
+                activeChildren[i].checked = checkbox.checked;
+            }
+        })
     }
 
     function findChildren(checkbox) {
@@ -61,13 +60,16 @@ function linkedCheckbox(widget) {
 
 
         setup();
-        checkbox.addEventListener("click", () => {
-            console.log(checkbox);
-            for (let i = 0; i < children.length; i++) {
-                children[i].checked = this.checked;
-                console.log(children[i]);
-            }
-        })
+
+
+        for (let i = 0; i < children.length; i++) {
+            children[i].addEventListener("click", () => {
+                let checkedCount = children.length;
+
+                firstCheckbox(checkbox).checked = checkedCount > 0;
+                firstCheckbox(checkbox).indeterminate = checkedCount > 0 && checkedCount < children.length;
+            })
+        }
     }
 
     function firstCheckbox(el) {

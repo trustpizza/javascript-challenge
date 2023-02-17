@@ -116,13 +116,12 @@ function linkedCheckbox(widget) {
   function setup() {
     var activeCheckbox = widget.querySelector('.active[kjs-role=checkbox]');
     var activeChildren = findChildren(activeCheckbox);
-    for (var i = 0; i < activeChildren.length; i++) {
-      activeChildren[i].addEventListener("click", function () {
-        var checkedCount = activeChildren.length;
-        firstCheckbox(activeCheckbox).checked = checkedCount > 0;
-        firstCheckbox(activeCheckbox).indeterminate = checkedCount > 0 && checkedCount < activeChildren.length;
-      });
-    }
+    var checkbox = firstCheckbox(activeCheckbox);
+    checkbox.addEventListener("click", function () {
+      for (var i = 0; i < activeChildren.length; i++) {
+        activeChildren[i].checked = checkbox.checked;
+      }
+    });
   }
   function findChildren(checkbox) {
     var allDescendants = [];
@@ -149,7 +148,6 @@ function linkedCheckbox(widget) {
     }
   }
   function handleCheckboxClick(e) {
-    var _this = this;
     linkedCheckboxes.forEach(function (checkbox) {
       checkbox.classList.remove('active');
     });
@@ -158,13 +156,13 @@ function linkedCheckbox(widget) {
     var checkbox = firstCheckbox(el);
     var children = findChildren(el);
     setup();
-    checkbox.addEventListener("click", function () {
-      console.log(checkbox);
-      for (var i = 0; i < children.length; i++) {
-        children[i].checked = _this.checked;
-        console.log(children[i]);
-      }
-    });
+    for (var i = 0; i < children.length; i++) {
+      children[i].addEventListener("click", function () {
+        var checkedCount = children.length;
+        firstCheckbox(checkbox).checked = checkedCount > 0;
+        firstCheckbox(checkbox).indeterminate = checkedCount > 0 && checkedCount < children.length;
+      });
+    }
   }
   function firstCheckbox(el) {
     var out;
