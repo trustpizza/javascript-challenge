@@ -114,14 +114,16 @@ function linkedCheckbox(widget) {
   // Set a variable equal to a widget's state (checked, unchecked, intermediary)
 
   function setup() {
-    var activeCheckbox = widget.querySelector('.active[kjs-role=checkbox]');
-    var activeChildren = findChildren(activeCheckbox);
-    var checkbox = firstCheckbox(activeCheckbox);
-    checkbox.addEventListener("click", function () {
-      for (var i = 0; i < activeChildren.length; i++) {
-        activeChildren[i].checked = checkbox.checked;
-      }
-    });
+    var activeCheckboxLI = widget.querySelector('.active[kjs-role=checkbox]');
+    var activeChildren = findChildren(activeCheckboxLI);
+    var checkbox = firstCheckbox(activeCheckboxLI);
+
+    // This one takes the active checbkox and sets all the children to be checked
+
+    for (var i = 0; i < activeChildren.length; i++) {
+      activeChildren[i].checked = checkbox.checked;
+      console.log(activeChildren[i]);
+    }
   }
   function findChildren(checkbox) {
     var allDescendants = [];
@@ -156,14 +158,18 @@ function linkedCheckbox(widget) {
     var checkbox = firstCheckbox(el);
     var children = findChildren(el);
     setup();
-    for (var i = 0; i < children.length; i++) {
-      children[i].addEventListener("click", function () {
-        var checkedCount = children.length;
-        firstCheckbox(checkbox).checked = checkedCount > 0;
-        firstCheckbox(checkbox).indeterminate = checkedCount > 0 && checkedCount < children.length;
-      });
+    /*
+    for (let i = 0; i < children.length; i++) {
+        children[i].addEventListener("click", () => {
+            let checkedCount = children.length;
+            
+            checkbox.checked = checkedCount > 0;
+            checkbox.indeterminate = checkedCount > 0 && checkedCount < children.length;
+        })
     }
+    */
   }
+
   function firstCheckbox(el) {
     var out;
     el.childNodes.forEach(function (node) {
@@ -173,21 +179,6 @@ function linkedCheckbox(widget) {
     });
     return out;
   }
-  // What does the setup function need to do? It needs
-  /* 
-      The setup function needs to create the logic for a checkbox. 
-      The logic for a checkbox is:
-          1. Each box must have a list of child elements (this list can be null) 
-              !!! Important consideration: What kind of data model do I want for checkbox children? I can either have an array or a node list (technically a hash but that's not helpful)
-              !!! Leaning towards a linked list
-          2. Each box must have a parent element (this can also be null)
-          3. Each box must have a state (checked, unchecked, intermediary)
-       There must also be a function that handles state changes
-      checkboxClickHandler () {
-          This function needs to do the following:
-          1. Search the node list of child elements 
-      }
-  */
   var actions = [];
   linkedCheckboxes.forEach(function (checkbox) {
     actions.push({
