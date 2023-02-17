@@ -31,7 +31,10 @@ function linkedCheckbox(widget) {
     };
 
     function recurseToFindChildren(el, descendants) {
-        descendants.push(el);
+        if (el.nodeName == "INPUT") {
+            descendants.push(el); // This only returns the actual checkboxes available, not just every element
+        };
+
         let children = el.children;
 
         for (let i = 0; i < children.length; i++) {
