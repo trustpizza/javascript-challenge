@@ -114,9 +114,32 @@ function linkedCheckbox(widget) {
   // Set a variable equal to a widget's state (checked, unchecked, intermediary)
 
   function setup() {
-    //linkedCheckboxes.forEach((checkbox) => {
-    //});
+    linkedCheckboxes.forEach(function (checkbox) {
+      var children = findChildren(checkbox);
+      console.log(checkbox, children);
+    });
     console.log('setup');
+  }
+  function findChildren(checkbox) {
+    var allDescendants = [];
+    var childNodes = checkbox.childNodes;
+    for (var i = 0; i < childNodes.length; i++) {
+      var element = childNodes.length;
+      if (childNodes[i].nodeType == 1) {
+        recurseToFindChildren(childNodes[i], allDescendants);
+      }
+    }
+    return allDescendants;
+  }
+  ;
+  function recurseToFindChildren(el, descendants) {
+    descendants.push(el.id);
+    var children = el.children;
+    for (var i = 0; i < children.length; i++) {
+      if (children[i].nodeType == 1) {
+        recurseToFindChildren(children[i], descendants);
+      }
+    }
   }
   function handleCheckboxClick(e) {}
   // What does the setup function need to do? It needs
@@ -181,7 +204,6 @@ function tabs(widget) {
       handler: handleTabClick
     });
   });
-  console.log(actions);
   return {
     setup: setup,
     actions: actions

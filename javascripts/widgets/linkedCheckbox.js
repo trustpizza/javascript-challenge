@@ -8,9 +8,37 @@ function linkedCheckbox(widget) {
         // Set a variable equal to a widget's state (checked, unchecked, intermediary)
 
     function setup() {
-        //linkedCheckboxes.forEach((checkbox) => {
-        //});
+        linkedCheckboxes.forEach((checkbox) => {
+            let children = findChildren(checkbox);
+            console.log(checkbox, children)
+        });
         console.log('setup');
+    }
+
+    function findChildren(checkbox) {
+        const allDescendants = [];
+
+        let childNodes = checkbox.childNodes;
+
+        for (let i = 0; i < childNodes.length; i++) {
+            const element = childNodes.length;
+            if (childNodes[i].nodeType == 1) {
+                recurseToFindChildren(childNodes[i], allDescendants);
+            }          
+        }
+
+        return allDescendants;
+    };
+
+    function recurseToFindChildren(el, descendants) {
+        descendants.push(el.id);
+        let children = el.children;
+
+        for (let i = 0; i < children.length; i++) {
+            if (children[i].nodeType == 1) {
+                recurseToFindChildren(children[i], descendants);
+            }
+        }
     }
 
     function handleCheckboxClick(e) {
