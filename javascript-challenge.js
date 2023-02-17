@@ -133,7 +133,7 @@ function linkedCheckbox(widget) {
   }
   ;
   function recurseToFindChildren(el, descendants) {
-    descendants.push(el.id);
+    descendants.push(el);
     var children = el.children;
     for (var i = 0; i < children.length; i++) {
       if (children[i].nodeType == 1) {

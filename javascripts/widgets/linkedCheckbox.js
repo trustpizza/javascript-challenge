@@ -31,7 +31,7 @@ function linkedCheckbox(widget) {
     };
 
     function recurseToFindChildren(el, descendants) {
-        descendants.push(el.id);
+        descendants.push(el);
         let children = el.children;
 
         for (let i = 0; i < children.length; i++) {
