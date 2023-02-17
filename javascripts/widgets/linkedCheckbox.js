@@ -14,7 +14,6 @@ function linkedCheckbox(widget) {
         linkedCheckboxes.forEach((checkbox) => {
             let children = findChildren(checkbox);
         });
-        console.log('setup', activeCheckbox, activeChildren);
     }
 
     function findChildren(checkbox) {
@@ -50,10 +49,25 @@ function linkedCheckbox(widget) {
         linkedCheckboxes.forEach((checkbox) => { checkbox.classList.remove('active');})
         const el = e.target.parentElement;
         el.classList.add('active');
-        console.log(el);
+        
+        const checkbox = firstCheckbox(el);
+        const children = findChildren(el);
+        
+
+
         setup();
         //const children = findChildren(el.parentElement); // This requires to find the parent element because the findChildren fucntion actually looks at the list item element (it requires an element you can nest other elements in and INPUTS are not able to nest elements)
         //console.log(el, children)
+    }
+
+    function firstCheckbox(el) {
+        let out;
+        el.childNodes.forEach((node) => {
+            if (node.nodeName == "INPUT") {
+                out = node;
+            }
+        })
+        return out;
     }
     // What does the setup function need to do? It needs
     /* 
