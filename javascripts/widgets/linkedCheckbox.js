@@ -12,16 +12,31 @@ function linkedCheckbox(widget) {
         const activeChildren = findChildren(activeCheckboxLI);
         const checkbox = firstCheckbox(activeCheckboxLI);
 
-
         // This one takes the active checbkox and sets all the children to be checked
         
         for (let i = 0; i < activeChildren.length; i++) {
             activeChildren[i].checked = checkbox.checked;
-            console.log(activeChildren[i]);
         }
-        
 
+        /* 
+            Function that searches for siblings to see if all are checked
 
+            Have a stop gap of a the most parent item
+
+            If search the parent element of the target element.
+            If all the elements are = to one another, then element.checked = parent.checked
+            else, nothing
+        */
+
+        for (let i = 0; i < activeChildren.length; i++) {
+            activeChildren[i].addEventListener("click", () => {
+                let checkedCount = findCheckedChildren(checkbox);
+                console.log(checkedCount);
+                
+                checkbox.checked = checkedCount > 0;
+                checkbox.indeterminate = checkedCount > 0 && checkedCount < activeChildren.length;
+            })
+        }
     }
 
     function findChildren(checkbox) {
@@ -38,6 +53,20 @@ function linkedCheckbox(widget) {
 
         return allDescendants.slice(1); // This slice removes the element itself from the array
     };
+
+    function findCheckedChildren(checkbox) {
+        const checkedDescendants = [];
+        const allDescendants = findChildren(checkbox);
+        
+        for (let i = 0; i < allDescendants.length; i++) {
+            const element = allDescendants[i];
+            if (element.checked) { 
+                checkedDescendants.push(element)
+                console.log(element); 
+            }
+        }
+        return checkedDescendants;
+    }
 
     function recurseToFindChildren(el, descendants) {
         if (el.nodeName == "INPUT") {
@@ -66,17 +95,10 @@ function linkedCheckbox(widget) {
         /* 
             What does this for loop do?
 
-            
+            Take all the child elements and createa  for loop that loops that many times
+            If any of the children are clicked it will:
+                1. Set the 
         */
-        for (let i = 0; i < children.length; i++) {
-            children[i].addEventListener("click", () => {
-                let checkedCount = children.length;
-                
-                checkbox.checked = checkedCount > 0;
-                checkbox.indeterminate = checkedCount > 0 && checkedCount < children.length;
-            })
-        }
-        
 
     }
 

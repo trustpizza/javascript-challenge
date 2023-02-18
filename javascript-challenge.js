@@ -122,7 +122,15 @@ function linkedCheckbox(widget) {
 
     for (var i = 0; i < activeChildren.length; i++) {
       activeChildren[i].checked = checkbox.checked;
-      console.log(activeChildren[i]);
+    }
+    for (var _i = 0; _i < activeChildren.length; _i++) {
+      activeChildren[_i].addEventListener("click", function () {
+        var checkedCount = findCheckedChildren(checkbox);
+        console.log(checkedCount);
+        checkbox.checked = checkedCount > 0;
+        console.log(checkbox);
+        checkbox.indeterminate = checkedCount > 0 && checkedCount < activeChildren.length;
+      });
     }
   }
   function findChildren(checkbox) {
@@ -137,6 +145,18 @@ function linkedCheckbox(widget) {
     return allDescendants.slice(1); // This slice removes the element itself from the array
   }
   ;
+  function findCheckedChildren(checkbox) {
+    var checkedDescendants = [];
+    var allDescendants = findChildren(checkbox);
+    for (var i = 0; i < allDescendants.length; i++) {
+      var element = allDescendants[i];
+      if (element.checked) {
+        checkedDescendants.push(element);
+        console.log(element);
+      }
+    }
+    return checkedDescendants;
+  }
   function recurseToFindChildren(el, descendants) {
     if (el.nodeName == "INPUT") {
       descendants.push(el); // This only returns the actual checkboxes available, not just every element
@@ -158,15 +178,11 @@ function linkedCheckbox(widget) {
     var checkbox = firstCheckbox(el);
     var children = findChildren(el);
     setup();
-    /*
-    for (let i = 0; i < children.length; i++) {
-        children[i].addEventListener("click", () => {
-            let checkedCount = children.length;
-            
-            checkbox.checked = checkedCount > 0;
-            checkbox.indeterminate = checkedCount > 0 && checkedCount < children.length;
-        })
-    }
+    /* 
+        What does this for loop do?
+         Take all the child elements and createa  for loop that loops that many times
+        If any of the children are clicked it will:
+            1. Set the 
     */
   }
 
