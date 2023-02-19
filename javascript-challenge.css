@@ -87,3 +87,6 @@ form[kjs-type=extendingForm] [kjs-role=extension] {
 
 [kjs-type=linkedCheckbox] {
   font-weight: bold; }
+
+[kjs-role=checkbox] {
+  border: solid black 1px; }
