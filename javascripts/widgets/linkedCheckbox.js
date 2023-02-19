@@ -17,6 +17,7 @@ function linkedCheckbox(widget) {
         for (let i = 0; i < activeChildren.length; i++) {
             activeChildren[i].checked = checkbox.checked;
         }
+        
 
         /* 
             Function that searches for siblings to see if all are checked
@@ -32,10 +33,10 @@ function linkedCheckbox(widget) {
         
     }
 
-    function findChildren(checkbox) {
+    function findChildren(checkboxLI) {
         const allDescendants = [];
 
-        let childNodes = checkbox.parentElement.childNodes;
+        let childNodes = checkboxLI.childNodes; // THIS IS THE PROBLEM AREA!!!!!
 
         for (let i = 0; i < childNodes.length; i++) {
             const element = childNodes.length;
@@ -49,7 +50,7 @@ function linkedCheckbox(widget) {
 
     function findCheckedChildren(checkbox) {
         const checkedDescendants = [];
-        const allDescendants = findChildren(checkbox);
+        const allDescendants = findChildren(checkbox.parentElement);
         
         for (let i = 0; i < allDescendants.length; i++) {
             const element = allDescendants[i];
@@ -81,16 +82,17 @@ function linkedCheckbox(widget) {
 
         const checkbox = firstCheckbox(el);
         const children = findChildren(el);
-
+        
+        
         for (let i = 0; i < children.length; i++) {
             children[i].addEventListener("click", () => {
                 let checkedCount = findCheckedChildren(checkbox).length;
 
                 checkbox.checked = checkedCount > 0;
                 checkbox.indeterminate = (checkedCount > 0 && checkedCount < children.length);
-                // console.log(checkbox, checkedCount > 0, checkedCount < children.length, checkedCount);
             })
         }
+        
 
         setup();
         /* 

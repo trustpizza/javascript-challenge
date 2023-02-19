@@ -115,6 +115,7 @@ function linkedCheckbox(widget) {
 
   function setup() {
     var activeCheckboxLI = widget.querySelector('.active[kjs-role=checkbox]');
+    console.log(activeCheckboxLI);
     var activeChildren = findChildren(activeCheckboxLI);
     var checkbox = firstCheckbox(activeCheckboxLI);
 
@@ -134,9 +135,10 @@ function linkedCheckbox(widget) {
     */
   }
 
-  function findChildren(checkbox) {
+  function findChildren(checkboxLI) {
     var allDescendants = [];
-    var childNodes = checkbox.parentElement.childNodes;
+    var childNodes = checkboxLI.childNodes; // THIS IS THE PROBLEM AREA!!!!!
+
     for (var i = 0; i < childNodes.length; i++) {
       var element = childNodes.length;
       if (childNodes[i].nodeType == 1) {
@@ -148,7 +150,7 @@ function linkedCheckbox(widget) {
   ;
   function findCheckedChildren(checkbox) {
     var checkedDescendants = [];
-    var allDescendants = findChildren(checkbox);
+    var allDescendants = findChildren(checkbox.parentElement);
     for (var i = 0; i < allDescendants.length; i++) {
       var element = allDescendants[i];
       if (element.checked) {
@@ -180,6 +182,7 @@ function linkedCheckbox(widget) {
     for (var i = 0; i < children.length; i++) {
       children[i].addEventListener("click", function () {
         var checkedCount = findCheckedChildren(checkbox).length;
+        console.log(el);
         checkbox.checked = checkedCount > 0;
         checkbox.indeterminate = checkedCount > 0 && checkedCount < children.length;
         // console.log(checkbox, checkedCount > 0, checkedCount < children.length, checkedCount);
