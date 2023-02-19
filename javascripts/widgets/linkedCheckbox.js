@@ -1,42 +1,21 @@
 function linkedCheckbox(widget) {
     
-    // Select all checkbox items
     const linkedCheckboxes = widget.querySelectorAll('[kjs-role=checkbox]');
-    // setup function
-        // Setup function needs to set the current checkbox item 
-        // Set a variable to equal the current checkbox item's children (and their children, etc. etc. until all elements are selected)
-        // Set a variable equal to a widget's state (checked, unchecked, intermediary)
 
     function setup() {
         const activeCheckboxLI = widget.querySelector('.active[kjs-role=checkbox]');
         const activeChildren = findChildren(activeCheckboxLI);
         const checkbox = firstCheckbox(activeCheckboxLI);
-
-        // This one takes the active checbkox and sets all the children to be checked
         
         for (let i = 0; i < activeChildren.length; i++) {
-            activeChildren[i].checked = checkbox.checked;
+            activeChildren[i].checked = checkbox.checked; // Selects or deselets all child elements
         }
-        
-
-        /* 
-            Function that searches for siblings to see if all are checked
-
-            Have a stop gap of a the most parent item
-
-            If search the parent element of the target element.
-            If all the elements are = to one another, then element.checked = parent.checked
-            else, nothing
-        
-        */
-   
-        
     }
 
     function findChildren(checkboxLI) {
         const allDescendants = [];
 
-        let childNodes = checkboxLI.childNodes; // THIS IS THE PROBLEM AREA!!!!!
+        let childNodes = checkboxLI.childNodes;
 
         for (let i = 0; i < childNodes.length; i++) {
             const element = childNodes.length;
@@ -90,20 +69,11 @@ function linkedCheckbox(widget) {
 
                 checkbox.checked = checkedCount > 0;
                 checkbox.indeterminate = (checkedCount > 0 && checkedCount < children.length);
+                // This loop searches all the children and does 2 things.  If there are no more checked children, the parent element is unchecked.  If there are some checked elements but not all, it is set to indeterminate
             })
         }
-        
 
         setup();
-        /* 
-            What does this for loop do?
-
-            Take all the child elements and createa  for loop that loops that many times
-            If any of the children are clicked it will:
-                1. Set the 
-        */
-        
-
     }
 
     function firstCheckbox(el) {
