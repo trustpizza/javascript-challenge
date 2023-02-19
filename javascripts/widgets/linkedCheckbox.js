@@ -26,23 +26,16 @@ function linkedCheckbox(widget) {
             If search the parent element of the target element.
             If all the elements are = to one another, then element.checked = parent.checked
             else, nothing
+        
         */
-
-        for (let i = 0; i < activeChildren.length; i++) {
-            activeChildren[i].addEventListener("click", () => {
-                let checkedCount = findCheckedChildren(checkbox);
-                console.log(checkedCount);
-                
-                checkbox.checked = checkedCount > 0;
-                checkbox.indeterminate = checkedCount > 0 && checkedCount < activeChildren.length;
-            })
-        }
+   
+        
     }
 
     function findChildren(checkbox) {
         const allDescendants = [];
 
-        let childNodes = checkbox.childNodes;
+        let childNodes = checkbox.parentElement.childNodes;
 
         for (let i = 0; i < childNodes.length; i++) {
             const element = childNodes.length;
@@ -62,7 +55,6 @@ function linkedCheckbox(widget) {
             const element = allDescendants[i];
             if (element.checked) { 
                 checkedDescendants.push(element)
-                console.log(element); 
             }
         }
         return checkedDescendants;
@@ -90,6 +82,15 @@ function linkedCheckbox(widget) {
         const checkbox = firstCheckbox(el);
         const children = findChildren(el);
 
+        for (let i = 0; i < children.length; i++) {
+            children[i].addEventListener("click", () => {
+                let checkedCount = findCheckedChildren(checkbox).length;
+
+                checkbox.checked = checkedCount > 0;
+                checkbox.indeterminate = (checkedCount > 0 && checkedCount < children.length);
+                // console.log(checkbox, checkedCount > 0, checkedCount < children.length, checkedCount);
+            })
+        }
 
         setup();
         /* 
@@ -99,6 +100,7 @@ function linkedCheckbox(widget) {
             If any of the children are clicked it will:
                 1. Set the 
         */
+        
 
     }
 

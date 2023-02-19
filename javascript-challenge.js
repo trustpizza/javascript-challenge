@@ -123,19 +123,20 @@ function linkedCheckbox(widget) {
     for (var i = 0; i < activeChildren.length; i++) {
       activeChildren[i].checked = checkbox.checked;
     }
-    for (var _i = 0; _i < activeChildren.length; _i++) {
-      activeChildren[_i].addEventListener("click", function () {
-        var checkedCount = findCheckedChildren(checkbox);
-        console.log(checkedCount);
-        checkbox.checked = checkedCount > 0;
-        console.log(checkbox);
-        checkbox.indeterminate = checkedCount > 0 && checkedCount < activeChildren.length;
-      });
-    }
+
+    /* 
+        Function that searches for siblings to see if all are checked
+         Have a stop gap of a the most parent item
+         If search the parent element of the target element.
+        If all the elements are = to one another, then element.checked = parent.checked
+        else, nothing
+    
+    */
   }
+
   function findChildren(checkbox) {
     var allDescendants = [];
-    var childNodes = checkbox.childNodes;
+    var childNodes = checkbox.parentElement.childNodes;
     for (var i = 0; i < childNodes.length; i++) {
       var element = childNodes.length;
       if (childNodes[i].nodeType == 1) {
@@ -152,7 +153,6 @@ function linkedCheckbox(widget) {
       var element = allDescendants[i];
       if (element.checked) {
         checkedDescendants.push(element);
-        console.log(element);
       }
     }
     return checkedDescendants;
@@ -177,6 +177,15 @@ function linkedCheckbox(widget) {
     el.classList.add('active');
     var checkbox = firstCheckbox(el);
     var children = findChildren(el);
+    for (var i = 0; i < children.length; i++) {
+      children[i].addEventListener("click", function () {
+        var checkedCount = findCheckedChildren(checkbox).length;
+        checkbox.checked = checkedCount > 0;
+        checkbox.indeterminate = checkedCount > 0 && checkedCount < children.length;
+        // console.log(checkbox, checkedCount > 0, checkedCount < children.length, checkedCount);
+      });
+    }
+
     setup();
     /* 
         What does this for loop do?
