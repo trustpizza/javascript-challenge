@@ -84,3 +84,6 @@ form[kjs-type=extendingForm] [kjs-role=extension] {
     display: none; }
   [kjs-type=tabs] [kjs-role=content] img {
     width: 100%; }
+
+[kjs-type=linkedCheckbox] {
+  font-weight: bold; }
